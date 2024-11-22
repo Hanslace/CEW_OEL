@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "processing.h": "c",
-        "alert.h": "c",
-        "utils.h": "c",
-        "string.h": "c"
-    }
-}

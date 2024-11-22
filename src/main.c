@@ -6,6 +6,11 @@
 int main() {
     char *api_response = NULL;
 
+    if (load_env_file(".env") != 0) {
+        fprintf(stderr, "Failed to load .env file\n");
+        return 1;
+    }
+    
     // Fetch data from API
     if (fetch_data(&api_response) != 0) {
         printf("Failed to fetch data\n");

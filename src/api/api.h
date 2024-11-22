@@ -7,9 +7,7 @@
 #include <string.h>
 #include "cJSON.h"
 
-#define API_KEY "7f164c9b76fe546457f5db19a69ca589"
-#define CITY_NAME "Karachi"
-#define API_URL "http://api.openweathermap.org/data/2.5/weather?q=" CITY_NAME "&appid=" API_KEY "&units=metric"
+#define API_URL_BASE "http://api.openweathermap.org/data/2.5/weather"
 
 struct MemoryStruct {
     char *memory;

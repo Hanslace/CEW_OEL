@@ -1,5 +1,33 @@
 #include "utils.h"
 
+int load_env_file(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening .env file");
+        return 1;
+    }
+
+    char line[256];
+    while (fgets(line, sizeof(line), file)) {
+        // Ignore comments and empty lines
+        if (line[0] == '#' || line[0] == '\n') continue;
+
+        // Remove newline character
+        line[strcspn(line, "\n")] = '\0';
+
+        // Split into key and value
+        char *key = strtok(line, "=");
+        char *value = strtok(NULL, "=");
+        if (key && value) {
+            // Set environment variable
+            setenv(key, value, 1);
+        }
+    }
+
+    fclose(file);
+    return 0;
+}
+
 int save_raw_data(const char *data) {
     FILE *fp;
     long file_size;

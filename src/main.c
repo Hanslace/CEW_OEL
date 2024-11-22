@@ -39,7 +39,7 @@ int main() {
     }
 
     // Check thresholds and send alerts if necessary
-    check_thresholds(data.temperature, data.humidity);
+    check_thresholds(data.temperature, data.humidity, data.pressure, data.visibility, data.wind_speed);
 
     // Free allocated memory
     free(api_response);

@@ -1,12 +1,14 @@
 #include "alert.h"
-#include <stdlib.h>
 
 #define TEMP_THRESHOLD 25.0
 #define HUMIDITY_THRESHOLD 50.0
+#define PRESSURE_THRESHOLD 1015.0
+#define VISIBILITY_THRESHOLD 5000.0
+#define WIND_SPEED_THRESHOLD 10.0
 
 #define SMTP_SERVER "smtp://smtp.gmail.com:587"
 
-int check_thresholds(float temperature, float humidity) {
+int check_thresholds(float temperature, float humidity, float pressure, float visibility, float wind_speed) {
     char alert_message[256];
 
     if (temperature > TEMP_THRESHOLD) {
@@ -18,7 +20,21 @@ int check_thresholds(float temperature, float humidity) {
         snprintf(alert_message, sizeof(alert_message), "Humidity Alert! Current Humidity: %.2f%% exceeds threshold of %.2f%%.", humidity, HUMIDITY_THRESHOLD);
         send_alert(alert_message);
         send_email_alert(getenv("RECIPIENT_EMAIL"), "Humidity Alert", alert_message);
-
+    }
+    if (pressure < PRESSURE_THRESHOLD) {
+        snprintf(alert_message, sizeof(alert_message), "Pressure Alert! Current Pressure: %.2f hPa is below the threshold of %.2f hPa.", pressure, PRESSURE_THRESHOLD);
+        send_alert(alert_message);
+        send_email_alert(getenv("RECIPIENT_EMAIL"), "Pressure Alert", alert_message);
+    }
+    if (visibility < VISIBILITY_THRESHOLD) {
+        snprintf(alert_message, sizeof(alert_message), "Visibility Alert! Current Visibility: %.2f m is below the threshold of %.2f m.", visibility, VISIBILITY_THRESHOLD);
+        send_alert(alert_message);
+        send_email_alert(getenv("RECIPIENT_EMAIL"), "Visibility Alert", alert_message);
+    }
+    if (wind_speed > WIND_SPEED_THRESHOLD) {
+        snprintf(alert_message, sizeof(alert_message), "Wind Speed Alert! Current Wind Speed: %.2f m/s exceeds threshold of %.2f m/s.", wind_speed, WIND_SPEED_THRESHOLD);
+        send_alert(alert_message);
+        send_email_alert(getenv("RECIPIENT_EMAIL"), "Wind Speed Alert", alert_message);
     }
 
     return 0;
@@ -33,7 +49,6 @@ int send_alert(const char *message) {
 
     return 0;
 }
-
 
 int send_email_alert(const char *recipient_email, const char *subject, const char *body) {
     char command[1024];

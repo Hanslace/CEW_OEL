@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int check_thresholds(float temperature, float humidity);
+int check_thresholds(float temperature, float humidity, float pressure, float visibility, float wind_speed);
 int send_alert(const char *message);
 int send_email_alert(const char *recipient_email, const char *subject, const char *body);
 
